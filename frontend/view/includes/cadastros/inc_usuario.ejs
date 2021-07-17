@@ -1,0 +1,307 @@
+<!-- Page Content (header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row sm-2">
+            <!-- Título -->
+            <div class="col-sm-6">
+                <h1>Cadastro de usuário</h1>
+            </div>
+            <!-- Navegação histórica -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="admin">Home</a></li>
+                    <li class="breadcrumb-item active">Cadastros</li>
+                    <li class="breadcrumb-item active">Usuário</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Page Content (conteúdo) -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <!-- Para iniciar fechado, adicione collapsed-card na class-->
+                <div class="card card-primary card-outline">
+
+                    <!-- ######################################################################### Cabeçalho -->
+                    <div class="card-header">
+                        <!-- Botões -->
+                        <div class="btn-group">
+                            <!-- Abre o modal para INSERT -->
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#modalADD">
+                                &nbsp;Adicionar&nbsp;
+                            </button>
+                        </div>
+
+
+                        <div class="btn-group">
+                            <!-- Botão para exportar dados da tabela (tableExport) -->
+                            <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                                <span class="caret"></span>
+                            </button>
+
+                            <!-- Exportar -->
+                            <div class="dropdown-menu" role="menu">
+                                <!-- Exportar para Excel -->
+                                <a class="dropdown-item" style="cursor: pointer;" onclick="(function(){
+                                $('#TBtable').tableExport({type:'excel', fileName: 'Usuarios', exportHiddenCells: true, ignoreColumn:'[1],[5],[8]'});
+                                })()"><i class="fas fa-file-excel" style="color: #118311;"></i>&nbsp;&nbsp;Ms-Excel</a>
+                                <!-- Exportar para PDF -->
+                                <a class="dropdown-item" style="cursor: pointer;" onclick="(function(){
+                                $('#TBtable').tableExport({type:'pdf', fileName: 'Usuarios', exportHiddenCells: true, ignoreColumn:'[5],[8]'});
+                                })()"><i class="fas fa-file-pdf" style="color: #d17021;"></i>&nbsp;&nbsp;PDF</a>
+                            </div>
+                        </div>
+
+                        <!-- Botão Ocultar ou exibir o card -->
+                        <div class="card-tools">
+                            <!-- Botão Abrir/fechar card (Icone: fa-minus ou fa-plus) -->
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <!-- Botão destruir card -->
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- ######################################################################### Tabela -->
+                    <div class="card-body">
+
+                        <style>
+                            .hiddenRow {
+                                padding: 0 !important;
+                            }
+                        </style>
+
+                        <% if (DTUsuario.length > 0) {%>
+                            <table id="TBtable" class="table table-hover">
+
+                                <thead class="thead-light">
+                                    <tr>
+                                        <!-- Cabeçalho: Titulos da tabela -->
+
+                                        <th scope="col">Cod</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Data de Cadastro</th>
+                                        <th scope="col">Data de Atualização</th>
+                                        <th scope="col">Opções</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <% DTUsuario.forEach((row, index) => { %>
+                                        <tr>
+                                            <!-- Detalhes: Dados da tabela -->
+                                            <td>
+                                                <%= row.id %>
+                                            </td>
+                                            <td>
+                                                <%= row.nome %>
+                                            </td>
+                                            <td>
+                                                <%= row.data_cadastro %>
+                                            </td>
+                                            <td>
+                                                <%= row.data_atualizacao %>
+                                            </td>
+
+                                            <td style="min-width: 130px;" class="align-bottom">
+
+                                                <a href="/usuario/<%= row.id %>" class="btn btn-xs btn-warning">&nbsp;&nbsp;&nbsp;Editar&nbsp;&nbsp;
+    
+                                                </a>
+
+                                                <button class="btn btn-xs btn-danger" data-toggle="modal" data-target="#modalDEL" onclick="(function(){
+                                                    document.getElementById('id_DEL').textContent = '<%= row.id %>';
+                                                    document.getElementById('user_DEL').textContent = '<%= row.nome %>';
+                                                    })()">Excluir
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <% }) %>
+                                </tbody>
+
+                                <!-- Pesquisa -->
+                                <tfoot>
+                                    <tr>
+                                        <th scope="col">Cod</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Data de cadastro</th>
+                                        <th scope="col">Data de atualização</th>
+                                        <th class="th-none" scope="col">Opções</th>
+                                    </tr>
+                                </tfoot>
+
+                            </table>
+                            <% } else { %>
+                                <!-- Não existe dados na tabela -->
+                                <p class="text-center">Clique <a data-toggle="modal" data-target="#modalADD" style="cursor:pointer; color:rgb(79, 79, 255)"> aqui </a> para adicionar um novo registro.
+                                </p>
+                                <% } %>
+                    </div>
+
+                    <!-- ######################################################################### Modal para ADICIONAR -->
+                    <div class="modal fade" id="modalADD" data-backdrop="static">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Adicionar</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <!-- Conteúdo central do modal -->
+                                <form role="form" action="/addUsuario" method="post" enctype="multipart/form-data">
+                                    <!-- Campos do formulário -->
+                                    <div class="modal-body">
+                                        <!-- Cod -->
+                                        <div class="row" style="display: none;">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="cod_ADD" class="label">Cod</label>
+                                                    <input type="text" class="form-control form-control-sm" name="cod_ADD" id="cod_ADD" placeholder="Cod" readonly=“true”>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <!-- Nome, Email -->
+                                                    <div class="col-sm-12">
+                                                        <!-- Nome -->
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="nome_ADD" class="label">Nome completo</label>
+                                                                    <input type="text" class="form-control form-control-sm" name="nome_ADD" id="nome_ADD" placeholder="Nome completo" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Botões -->
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="submit" class="btn btn-primary" id="btnSalvar_ADD">&nbsp;&nbsp;Salvar&nbsp;&nbsp;</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ######################################################################### Modal para EDITAR -->
+                    <div class="modal fade" id="modalEDIT" data-backdrop="static">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Editar</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <!-- Conteúdo central do modal -->
+                                <form role="form" action="/editUsuario/" method="post" enctype="multipart/form-data">
+                                    <!-- Formulário para Editar usuário -->
+                                    <div class="modal-body">
+
+                                        <!-- Cod -->
+                                        <div class="row" style="display: none;">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="id_EDIT" class="label">Cod</label>
+                                                    <input type="text" class="form-control form-control-sm" name="id_EDIT" id="id_EDIT" placeholder="Cod" readonly=“true”>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="row">
+                                                    <!-- Nome, Email -->
+                                                    <div class="col-sm-12">
+                                                        <!-- Nome -->
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="form-group">
+                                                                    <label for="nome_EDIT" class="label">Nome</label>
+                                                                    <input type="text" class="form-control form-control-sm" name="nome_EDIT" id="nome_EDIT" placeholder="Nome completo" required>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Botões -->
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="submit" class="btn btn-primary" id="btnSalvar_EDIT">&nbsp;&nbsp;Salvar&nbsp;&nbsp;</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ######################################################################### Modal para ELIMINAR -->
+                    <div class="modal fade" id="modalDEL" id="modal-danger" data-backdrop="static">
+                        <div class="modal-dialog">
+                            <div class="modal-content bg-danger">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Atenção!</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Tem certeza que deseja excluir o registro selecionado?</p>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-outline-light" data-dismiss="modal">
+                                        Não, cancelar
+                                    </button>
+
+                                    <!-- Esse span é oculto pois apenas recebe o texto contendo 
+                                         o cod para eliminação na função abaixo -->
+                                    <span style="display:none" id="id_DEL"></span>
+                                    <span style="display:none" id="user_DEL"></span>
+
+                                    <!-- Função anónima dentro da classe button
+                                         que direciona para a route /delete/:id após o usuário clicar em sim no modal -->
+                                    <button type="button" class="btn btn-outline-light" onclick="(function() {
+                                            window.location = '/delUsuario/' + document.getElementById('id_DEL').textContent;
+                                            })()" id="btnDeletar_DEL">Sim, excluir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Grava o texto recebido da variável status_Crud do routes/usuario
+		 lá no "tails.ejs" tem uma função no final que verifica o que tem neste span"
+		 e dispara uma função de alerta do toastr de acordo com o texto -->
+<span style="display:none" id='status_Crud'><%= status_Crud %></span>

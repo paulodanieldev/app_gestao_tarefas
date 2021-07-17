@@ -1,0 +1,33 @@
+<%- include ("./includes/default/0-head") %>
+
+    <!-- Aqui vc altera o tema de fundo: bg-theme2 -->
+
+    <body class="bg-theme bg-theme3" id="body-page" name="body-page">
+
+        <!-- Efeito de fundo -->
+        <div id="particles-js"></div>
+
+        <!-- Formulário de Login -->
+        <div class="login-center-me">
+            <div class="login-card login-border-primary mb-3 text-white" style="max-width: 20rem; z-index: 1000; width: 250px; box-shadow: 4px 4px 4px 2px #00000033;">
+
+                <!-- Logo marca -->
+                <div class="login-card-header" style="text-align: center;">
+                    <img src="dist/img/logo-veggi.png" style="height: 60px;">
+                </div>
+
+                <div class="card-body">
+                    <h1 class="card-title">Gestão de tarefas</h1>
+                    <p class="card-text">Gerencie as tarefas de seu time de forma organizada e simples.</p>
+                    <a href="/admin" class="btn btn-success btn-lg btn-block">Acessar o sistema</a>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- ./card -->
+        </div>
+        <!-- ./center-me -->
+
+        <!-- Utilizado pelo Toast no tail -->
+        <span style="display:none" id='status_Login'><%= status_Login %></span>
+
+        <%- include ("./includes/default/6-tail") %>

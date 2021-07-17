@@ -1,0 +1,56 @@
+<!-- Brand Logo -->
+<a href="/admin#" class="brand-link">
+    <% let host = 'http://localhost:3000/' %>
+        <img src="<%= host %>dist/img/logo-veggi.png" alt="veggi Logo" class="brand-image elevation-0">
+        <!-- <span class="brand-text font-weight-light" style="font-size: 15px">Simples Web Soluções</span> -->
+</a>
+
+<!-- Sidebar -->
+<div class="sidebar">
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            <!-- /Menu cadastros -->
+            <li class="nav-item has-treeview <%= CadastroOpen %>">
+
+                <!-- Cadastro -->
+                <a href="#" class="nav-link <%= Cadastro %>">
+                    <i class="nav-icon fas fa-user-plus"></i>
+                    <p>Cadastros<i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+
+                <!-- /Sub menus -->
+                <ul class="nav nav-treeview" id="myMenu">
+
+                    <!-- Usuario -->
+                    <li class="nav-item">
+                        <a href="/usuario" class="nav-link <%= CadUsuario %>">
+                            <i class="fas fa-user-tie nav-icon" style="font-size: smaller;"></i>
+                            <p>Usuário</p>
+                        </a>
+                    </li>
+
+                    <!-- Tarefas -->
+                    <!-- <li class="nav-item">
+                        <a href="/tarefa" class="nav-link <%= CadTarefa %>">
+                            <i class="fas fa-user-graduate nav-icon" style="font-size: smaller;"></i>
+                            <p>Tarefa</p>
+                        </a>
+                    </li> -->
+                </ul>
+            </li>
+
+            <!-- /Menu Sair -->
+            <li class="nav-item has-treeview">
+                <a href="/" class="nav-link">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Sair</p>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+</div>

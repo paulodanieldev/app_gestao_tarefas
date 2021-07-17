@@ -1,13 +1,13 @@
 //cria instancia express
 const express = require('express');
 //cria instancia de rota do express
-const route  = express.Router();
+const route = express.Router();
 
 const usersController = require('../controllers/users.controller');
 const tasksController = require('../controllers/tasks.controller');
 
 //chama as configuracoes da api
-const auth    = require ('../config/auth');
+const auth = require('../config/auth');
 
 //dis que todas rotas apartir de /api/private nescessitam de token
 //obs.: rotas /api/public não necessitam de token
@@ -22,8 +22,8 @@ route.get('/api/public/users', usersController.selectAllUser);
 route.post('/api/public/users', usersController.insertUser);
 route.patch('/api/public/users', usersController.updateUser);
 route.get('/api/public/users/:id', usersController.selectUser);
+route.get('/api/public/users/name/:name', usersController.selectUserByName);
 route.delete('/api/public/users', usersController.deleteUser);
-
 
 /* ROTAS CRUD TAREFAS */
 route.get('/api/public/tasks', tasksController.selectAllTask);

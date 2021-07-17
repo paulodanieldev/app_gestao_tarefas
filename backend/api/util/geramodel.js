@@ -11,22 +11,22 @@
 let tabelas = [];
 let db = require('../config/db');
 
-process.argv.forEach(function (val, index, array) {
+process.argv.forEach(function(val, index, array) {
     tabelas[index] = val;
-  });
+});
 
 let tabela = tabelas[2];
-if(!tabela){
+if (!tabela) {
     console.error(`tabela não pode ser em branco!`);
     return false;
 }
 
 db.query(
-    `DESCRIBE ${tabela}`
-)
-.then(
-    rows => {
-        let sql_insert = `insert: (dados) => {
+        `DESCRIBE ${tabela}`
+    )
+    .then(
+        rows => {
+            let sql_insert = `insert: (dados) => {
             return db.query(\`
                 INSERT INTO ${tabela}
                 (
@@ -102,5 +102,3 @@ db.query(
 
     }
 )
-
-
